@@ -276,10 +276,9 @@ class Clock {
     }
   }
   
-  new Clock("[clocks-container]", "../audio/true.mp3").draw();
+  new Clock("[clocks-container]", "audio/true.mp3").draw();
   new Clock("[clocks-container]").draw();
   
-
 
 
 
