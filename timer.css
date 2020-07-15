@@ -1,0 +1,113 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 80px;
+  color: #3583B6;
+}
+
+.clocks {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: -50px;
+}
+
+.clock {
+  margin-top: -400px;
+  margin-left: 140px;
+}
+
+.clock-input {
+  display: inline-block;
+  border: none;
+  width: 150px;
+  height: 75px;
+  text-align: center;
+  font-family: 'Roboto';
+  font-size: 100px;
+  color: #3583B6;
+  background: transparent;
+}
+
+::placeholder {
+  color: #3583B6;
+}
+
+.clock span {
+  font-size: 100px;
+  margin-right: -30px;
+  margin-left: -30px;
+  color: #3583B6;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 30px;
+  margin-left: 285px;
+}
+
+.start-pause-button {
+  margin-left: -40px;
+}
+
+.start-button {
+  outline: none;
+  background: transparent;
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border-width: 25px 0px 25px 50px;
+  border-color: transparent transparent transparent #3583B6;
+}
+
+
+.start-button:hover {
+  opacity: 0.8;
+}
+
+.pause-button {
+  outline: none;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 1px;
+  border: 13px solid #3583B6;
+  border-top: none;
+  border-bottom: none;
+}
+
+.reset-button {
+  margin-left: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #3583B6;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: #3583B6;
+}
+
+
+.base-circle {
+  fill: none;
+  stroke: #B6B6B6;
+  stroke-width: 4px
+}
+
+.progress-circle {
+  fill: none;
+  stroke: #3583B6;
+  stroke-width: 4px;
+  transition: stroke-dashoffset 0.7s;
+}
+
+#pointer-circle {
+  fill: #FFF;
+  stroke: #3583B6;
+  stroke-width: 2px;
+}
