@@ -276,7 +276,7 @@ class Clock {
     }
   }
   
-  new Clock("[clocks-container]", "https://sampleswap.org/mp3/artist/31206/TheBranMuffin_Bobby-Zilch-320.mp3").draw();
+  new Clock("[clocks-container]", "../audio/true.mp3").draw();
   new Clock("[clocks-container]").draw();
   
 
