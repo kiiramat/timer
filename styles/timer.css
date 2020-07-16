@@ -5,6 +5,12 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+
+#clockPage {
+  font-family: 'Acme', sans-serif;
+}
+
+
 h1 {
   text-align: center;
   font-size: 80px;
@@ -13,6 +19,7 @@ h1 {
 
 .clocks {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   margin-top: -50px;
 }
@@ -28,7 +35,6 @@ h1 {
   width: 150px;
   height: 75px;
   text-align: center;
-  font-family: 'Roboto';
   font-size: 100px;
   color: #3583B6;
   background: transparent;
@@ -45,7 +51,7 @@ h1 {
   color: #3583B6;
 }
 
-.buttons {
+.clockButtons {
   display: flex;
   margin-top: 30px;
   margin-left: 285px;
@@ -92,6 +98,51 @@ h1 {
   border-color: #3583B6;
 }
 
+.delete-button {
+  border: none;
+  font-size: 30px;
+  font-weight: 700;
+  color: #3583B6;
+  background-color: transparent;
+  padding: 10px 10px;
+  margin-left: 255px;
+  margin-top: 150px; 
+
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  overflow: hidden;
+}
+
+.delete-button:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-color: #2098D1;
+  border-style: solid;
+  border-width: 0;
+  -webkit-transition-property: border-width;
+  transition-property: border-width;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+
+.delete-button:hover:before,
+.delete-button:focus:before, 
+.delete-button:active:before {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  border-width: 4px;
+}
 
 .base-circle {
   fill: none;
