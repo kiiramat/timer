@@ -49,7 +49,7 @@ class Clock {
     
     /*pointer calculation*/
     if (this._divideCircleInXParts === 0) {
-      this._divideCircleInXParts = 360 / ((this._minutesInput.value / 60) + this._secondsInput.value);
+      this._divideCircleInXParts = 360 / ((this._minutesInput.value * 60) + Number(this._secondsInput.value));
     }
     const deg = 360 - (this._divideCircleInXParts * this._iteration);
     this._translationCircleGroup.setAttributeNS(null, 'transform', `rotate(${deg})`);
@@ -265,7 +265,7 @@ class Clock {
   
   drawSVGElements(clockContainer) {
     const circle = document.createElement('div');
-    circle.setAttributeNS(null, 'class', 'svg');
+    circle.setAttributeNS(null, 'class', 'svg-div');
     const svgElement = this._createSVG();
     const g1Element = this._createSvgG("translate(75,75)");
     const circle1Element = this._createSvgCircle('50', null, null, 'base-circle');
@@ -284,9 +284,9 @@ class Clock {
     clockContainer.append(circle);
   }
   
-  
   draw() {
     var clockDiv = document.createElement("div");
+    clockDiv.className = "clock-div";
     this.drawSVGElements(clockDiv);
     this.drawHtmlElements(clockDiv);
     this._container.append(clockDiv);
