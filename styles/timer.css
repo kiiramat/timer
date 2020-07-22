@@ -1,15 +1,14 @@
-/* Chrome, Safari, Edge, Opera */
+/*Remove arrows inside number input in Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-
-#clockPage {
-  font-family: 'Acme', sans-serif;
+/*Remove arrows inside number input in Firefox*/
+input[type='number'] {
+  -moz-appearance:textfield;
 }
-
 
 h1 {
   text-align: center;
@@ -19,11 +18,12 @@ h1 {
 
 .clock-plus {
   position: fixed;
-  margin-top: 270px;
+  margin-top: 300px;
   margin-left: 25px;
 
   border: none;
   outline: none;
+  font-family: 'Acme', sans-serif;
   font-size: 50px;
   font-weight: 700;
   color: #3583B6;
@@ -32,7 +32,6 @@ h1 {
 
   display: inline-block;
   vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   overflow: hidden;
@@ -49,16 +48,12 @@ h1 {
   border-color: #2098D1;
   border-style: solid;
   border-width: 0;
-  -webkit-transition-property: border-width;
   transition-property: border-width;
-  -webkit-transition-duration: 0.1s;
   transition-duration: 0.1s;
-  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
 
 .clock-plus:hover:before {
-  -webkit-transform: translateY(0);
   transform: translateY(0);
   border-width: 4px;
 }
@@ -75,6 +70,28 @@ h1 {
   margin: 65px 0px 65px;
 }
 
+.clock-header {
+  display: flex;
+  justify-content: center;
+}
+
+.header-input {
+  outline: 0;
+  width: 40%;
+  text-align: center;
+  border-width: 0 0 2px;
+  border-color: #3583B6;
+  font-family: 'Acme', sans-serif;
+  color: #3583B6;
+  font-size: 40px;
+  font-weight: 700;
+  margin-top: 50px;
+}
+
+.header-input::placeholder {
+  color: #acc5d6;
+}
+
 .clock {
   margin-top: -400px;
   margin-left: 140px;
@@ -83,9 +100,10 @@ h1 {
 .clock-input {
   display: inline-block;
   border: none;
-  width: 150px;
+  width: 130px;
   height: 75px;
   text-align: center;
+  font-family: 'Acme', sans-serif;
   font-size: 100px;
   color: #3583B6;
   background: transparent;
@@ -97,8 +115,8 @@ h1 {
 
 .clock span {
   font-size: 100px;
-  margin-right: -20px;
-  margin-left: -20px;
+  margin-right: -5px;
+  margin-left: -5px;
   color: #3583B6;
 }
 
@@ -149,19 +167,23 @@ h1 {
   border-color: #3583B6;
 }
 
+.clock-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}
+
 .delete-button {
   border: none;
+  font-family: 'Acme', sans-serif;
   font-size: 30px;
   font-weight: 700;
   color: #3583B6;
   background-color: transparent;
   padding: 10px 10px;
-  margin-left: 245px;
-  margin-top: 150px; 
 
   display: inline-block;
   vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
@@ -179,18 +201,14 @@ h1 {
   border-color: #2098D1;
   border-style: solid;
   border-width: 0;
-  -webkit-transition-property: border-width;
   transition-property: border-width;
-  -webkit-transition-duration: 0.1s;
   transition-duration: 0.1s;
-  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
 
 .delete-button:hover:before,
 .delete-button:focus:before, 
 .delete-button:active:before {
-  -webkit-transform: translateY(0);
   transform: translateY(0);
   border-width: 4px;
 }

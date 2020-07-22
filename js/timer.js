@@ -17,6 +17,7 @@ class Clock {
     this._iteration = 1;
     this._waitUntilTheEnd = false;
     
+    //audio
     this._audio = new Audio(urlToAudio);
     this._canPlay = false;
     this._audio.addEventListener("canplaythrough", event => {
@@ -130,9 +131,31 @@ class Clock {
       this._audio.currentTime = 0;
     }  
   }
+
   
-  
-  _createInputElement(max, clockSetter, placeholder, func) {
+  _createTextInputElement(id, className, name, placeholder) {
+    const input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("id", id);
+    input.setAttribute("class", className);
+    input.setAttribute("name", name);
+    input.setAttribute("placeholder", placeholder);
+    return input;
+  }
+
+
+  drawHeaderElements(clockContainer) {
+    const headerDiv = document.createElement("div");
+    headerDiv.className = 'clock-header';
+    const headerInput = this._createTextInputElement("headerId", "header-input", "header", "Insert name");
+
+    headerDiv.append(headerInput);
+
+    clockContainer.append(headerDiv);
+  }
+
+
+  _createNumberInputElement(max, clockSetter, placeholder, func) {
     const input = document.createElement("input");
     input.className = "clock-input";
     input.setAttribute("type", "number");
@@ -169,10 +192,10 @@ class Clock {
      */
     const clock = document.createElement("div");
     clock.className = 'clock';
-    const inputMinutes = this._createInputElement('59', "minutes", "00", () => {
+    const inputMinutes = this._createNumberInputElement('59', "minutes", "00", () => {
       inputMinutes.value = this._padInput(inputMinutes.value);
     });
-    const inputSeconds = this._createInputElement('59', "seconds", "00", () => {
+    const inputSeconds = this._createNumberInputElement('59', "seconds", "00", () => {
       inputSeconds.value = this._padInput(inputSeconds.value);
     });
     const inputSeparator = document.createElement("span");
@@ -200,10 +223,12 @@ class Clock {
     /**
      * delete button
      */
-    const deleteButton = document.createElement("div");
+    const clockFooter = document.createElement("div");
+    clockFooter.className = "clock-footer"
     const delButton = this._createButtonElement("Delete", "delete-button", () => {
       clockContainer.parentNode.removeChild(clockContainer);
     })
+
     
     clock.append(inputMinutes);
     clock.append(inputSeparator);
@@ -213,13 +238,13 @@ class Clock {
     startPauseButton.append(this._startButton);
     clockButtons.append(resetButton);
 
-    deleteButton.append(delButton);
+    clockFooter.append(delButton);
 
     this._minutesInput = inputMinutes;
     this._secondsInput = inputSeconds;
     clockContainer.append(clock);
     clockContainer.append(clockButtons);
-    clockContainer.append(deleteButton);
+    clockContainer.append(clockFooter);
   }
   
   
@@ -287,6 +312,7 @@ class Clock {
   draw() {
     var clockDiv = document.createElement("div");
     clockDiv.className = "clock-div";
+    this.drawHeaderElements(clockDiv);
     this.drawSVGElements(clockDiv);
     this.drawHtmlElements(clockDiv);
     this._container.append(clockDiv);
