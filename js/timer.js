@@ -1,11 +1,14 @@
 class Clock {
-  constructor(selector, urlToAudio) {
+  constructor(selector, clockConfiguration) {
+    this.config = clockConfiguration || new ClockConfiguration();
+
     this._endtime;
     this._timeInterval = null;
     this._isPlaying = false;
     
     //DOM Elements
     this._container = document.querySelector(selector);
+    this._audioLinkInput = null;
     this._minutesInput = null;
     this._secondsInput = null;
     this._startButton = null;
@@ -20,7 +23,7 @@ class Clock {
     //audio
     this._audio = null;
     this._canPlay = false;
-    this.setAudio(urlToAudio);
+    this.setAudio(this.config.audioLink);
   }
 
   setAudio(mp3Link) {
@@ -153,39 +156,45 @@ class Clock {
   drawTitleElement(clockContainer) {
     const headerDiv = document.createElement("div");
     headerDiv.className = 'clock-title';
-    const headerInput = this._createTextInputElement("titleId", "title-input", "title", "Insert name");
-
-    headerDiv.append(headerInput);
+    const titleInput = this._createTextInputElement("titleId", "title-input", "title", "Insert name");
+    titleInput.value = this.config.title;
+    headerDiv.append(titleInput);
 
     clockContainer.append(headerDiv);
   }
 
+  storeLink(linkToStore) {
+      // get original link or accept different link
+      if (linkToStore === "" || linkToStore.match(/http(s?):\/\/.*\/([^\/]+\.)(.{3})$/gmi)) {
+        this.config.audioLink = linkToStore;
+        this.setAudio(linkToStore);
+        this._audioLinkInput.value = linkToStore.substr(linkToStore.lastIndexOf('/') + 1);
+      }
+  }
   
   drawAudioElement(clockContainer) {
-    let originalLink = "";
-
     const audioDiv = document.createElement("div");
     audioDiv.className = "clock-audio";
-    const audioInput = this._createTextInputElement("audioId", "audio-input", "audio", "Insert audio link");
-    audioInput.addEventListener("keyup", (event) => {
+    this._audioLinkInput = this._createTextInputElement("audioId", "audio-input", "audio", "Insert audio link");
+    this._audioLinkInput.addEventListener("keyup", ()=>{
       // when you press enter
       if (event.keyCode === KEY.ENTER) {
-        // get original link or accept different link
-        if (originalLink === "" || audioInput.value.match(/http(s?):\/\/.*\/([^\/]+\.)(.{3})$/gmi)) {
-          originalLink = audioInput.value;
-        }
-        this.setAudio(audioInput.value);
-        audioInput.value = audioInput.value.substr(audioInput.value.lastIndexOf('/') + 1);
+        this.storeLink(this._audioLinkInput.value);
+      }
+    });
+    this._audioLinkInput.addEventListener("blur", ()=>{
+      this.storeLink(this._audioLinkInput.value);
+    });
+
+    this._audioLinkInput.addEventListener("focus", () => {
+      if (this.config.audioLink !== "" && !this.config.isDefaultAudioLink) {
+        this._audioLinkInput.value = this.config.audioLink;
       }
     });
 
-    audioInput.addEventListener("click", () => {
-      if (originalLink !== "") {
-        audioInput.value = originalLink;
-      }
-    })
+    this.storeLink(this.config.audioLink);
 
-    audioDiv.append(audioInput);
+    audioDiv.append(this._audioLinkInput);
     clockContainer.append(audioDiv);
   }
 
@@ -230,9 +239,13 @@ class Clock {
     const inputMinutes = this._createNumberInputElement('59', "minutes", "00", () => {
       inputMinutes.value = this._padInput(inputMinutes.value);
     });
+    inputMinutes.value = this.config.minutes;
+
     const inputSeconds = this._createNumberInputElement('59', "seconds", "00", () => {
       inputSeconds.value = this._padInput(inputSeconds.value);
     });
+    inputSeconds.value = this.config.seconds;
+
     const inputSeparator = document.createElement("span");
     inputSeparator.innerHTML = " : "
     
@@ -355,11 +368,17 @@ class Clock {
   }
 }
 
-new Clock("[clocks-container]", "audio/true.mp3").draw();
+const clocks = [];
+clocks.push(new Clock("[clocks-container]"))
+clocks.forEach((clock) => {
+  clock.draw();
+});
 
 const clockAdderButton = document.querySelector("[clock-adder]");
 clockAdderButton.addEventListener("click", () => {
-  new Clock("[clocks-container]", "audio/true.mp3").draw();
+  const newClock = new Clock("[clocks-container]", "audio/true.mp3");
+  newClock.draw();
+  clocks.push(newClock)
 });
 
 
