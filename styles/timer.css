@@ -63,12 +63,12 @@ input[type='number'] {
   margin: 80px 0px 70px;
 }
 
-.clock-header {
+.clock-title {
   display: flex;
   justify-content: center;
 }
 
-.header-input {
+.title-input {
   outline: 0;
   width: 40%;
   text-align: center;
@@ -81,7 +81,29 @@ input[type='number'] {
   margin-top: 50px;
 }
 
-.header-input::placeholder {
+.title-input::placeholder {
+  color: #acc5d6;
+}
+
+.clock-audio {
+  display: flex;
+  justify-content: center;
+}
+
+.audio-input {
+  outline: 0;
+  width: 100%;
+  text-align: center;
+  border: none;
+  border-color: #3583B6;
+  font-family: 'Acme', sans-serif;
+  color: #3583B6;
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.audio-input::placeholder {
   color: #acc5d6;
 }
 

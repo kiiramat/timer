@@ -18,7 +18,13 @@ class Clock {
     this._waitUntilTheEnd = false;
     
     //audio
-    this._audio = new Audio(urlToAudio);
+    this._audio = null;
+    this._canPlay = false;
+    this.setAudio(urlToAudio);
+  }
+
+  setAudio(mp3Link) {
+    this._audio = new Audio(mp3Link);
     this._canPlay = false;
     this._audio.addEventListener("canplaythrough", event => {
       this._canPlay = true;
@@ -144,14 +150,43 @@ class Clock {
   }
 
 
-  drawHeaderElements(clockContainer) {
+  drawTitleElement(clockContainer) {
     const headerDiv = document.createElement("div");
-    headerDiv.className = 'clock-header';
-    const headerInput = this._createTextInputElement("headerId", "header-input", "header", "Insert name");
+    headerDiv.className = 'clock-title';
+    const headerInput = this._createTextInputElement("titleId", "title-input", "title", "Insert name");
 
     headerDiv.append(headerInput);
 
     clockContainer.append(headerDiv);
+  }
+
+  
+  drawAudioElement(clockContainer) {
+    let originalLink = "";
+
+    const audioDiv = document.createElement("div");
+    audioDiv.className = "clock-audio";
+    const audioInput = this._createTextInputElement("audioId", "audio-input", "audio", "Insert audio link");
+    audioInput.addEventListener("keyup", (event) => {
+      // when you press enter
+      if (event.keyCode === KEY.ENTER) {
+        // get original link or accept different link
+        if (originalLink === "" || audioInput.value.match(/http(s?):\/\/.*\/([^\/]+\.)(.{3})$/gmi)) {
+          originalLink = audioInput.value;
+        }
+        this.setAudio(audioInput.value);
+        audioInput.value = audioInput.value.substr(audioInput.value.lastIndexOf('/') + 1);
+      }
+    });
+
+    audioInput.addEventListener("click", () => {
+      if (originalLink !== "") {
+        audioInput.value = originalLink;
+      }
+    })
+
+    audioDiv.append(audioInput);
+    clockContainer.append(audioDiv);
   }
 
 
@@ -312,7 +347,8 @@ class Clock {
   draw() {
     var clockDiv = document.createElement("div");
     clockDiv.className = "clock-div";
-    this.drawHeaderElements(clockDiv);
+    this.drawTitleElement(clockDiv);
+    this.drawAudioElement(clockDiv);
     this.drawSVGElements(clockDiv);
     this.drawHtmlElements(clockDiv);
     this._container.append(clockDiv);
