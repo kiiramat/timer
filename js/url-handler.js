@@ -14,7 +14,7 @@ class UrlHandler {
     convertToUrl(clockConfigs) {
         const joinedConfigStrings = clockConfigs.map((config)=>{
             return config.toString();
-        }).join();
+        }).join(CLOCK_CONFIG_DELIMITER);
 
         //escape string for use in the url
         return "#" + encodeURIComponent(joinedConfigStrings);

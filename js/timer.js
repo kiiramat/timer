@@ -2,9 +2,9 @@ const clocks = [];
 
 //if nothing from URL:
 if (location.hash === '') {
-  clocks.push(new Clock("[clocks-container]"))
+  clocks.push(new Clock("[clocks-container]"));
 } else {
-  const clocksConfiguration = URL_HANDLER.pullFromUrl(location.hash);
+  const clocksConfiguration = URL_HANDLER.pullFromUrl();
   clocksConfiguration.forEach((clockConfig) => {
     clocks.push(new Clock("[clocks-container]", clockConfig));
   })
