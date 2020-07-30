@@ -316,6 +316,7 @@ class Clock {
         const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svg.setAttributeNS(null, 'width', '600px');
         svg.setAttributeNS(null, 'height', '600px');
+        svg.setAttributeNS(null, 'class', 'svg-clock');
         svg.setAttributeNS(null, 'viewBox', '0 0 150 150');
         return svg;
     }

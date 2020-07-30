@@ -33,5 +33,6 @@ const clockAdderButton = document.querySelector("[clock-adder]");
 clockAdderButton.addEventListener("click", () => {
     const newClock = new Clock("[clocks-container]");
     newClock.draw();
-    clocks.push(newClock)
+    clocks.push(newClock);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 });
