@@ -1,7 +1,7 @@
 const CLOCK_CONFIG_DELIMITER = "||::||";
 
 class UrlHandler {
-    constructor() {}
+    constructor() { }
 
     pushToUrl(clockConfigs) {
         location.hash = this.convertToUrl(clockConfigs);
@@ -12,7 +12,7 @@ class UrlHandler {
     }
 
     convertToUrl(clockConfigs) {
-        const joinedConfigStrings = clockConfigs.map((config)=>{
+        const joinedConfigStrings = clockConfigs.map((config) => {
             return config.toString();
         }).join(CLOCK_CONFIG_DELIMITER);
 
@@ -21,7 +21,7 @@ class UrlHandler {
     }
 
     convertFromUrl(hashFragment) {
-        if(!hashFragment || hashFragment === "#") {
+        if (!hashFragment || hashFragment === "#") {
             return [];
         }
         const decodedFragment = decodeURIComponent(hashFragment).slice(1);

@@ -54,7 +54,8 @@ class ClockConfiguration {
     }
 }
 
-ClockConfiguration.fromString = function(urlString) {
+ClockConfiguration.fromString = function (urlString) {
     const splitStr = urlString.split("|:|");
-    return new ClockConfiguration (splitStr[0], splitStr[1], splitStr[2], splitStr[3]);
+    return new ClockConfiguration(splitStr[0], splitStr[1], splitStr[2], splitStr[3]);
 }
+

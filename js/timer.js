@@ -31,7 +31,7 @@ clockAdderButton.addEventListener("click", () => {
 
 
 
-  
+
   // let endtime = 0;
 // let timeInterval = null;
 
@@ -41,7 +41,7 @@ clockAdderButton.addEventListener("click", () => {
 //   const total = Date.parse(endtime) - Date.parse(new Date());
 //   const seconds = Math.floor( (total/1000) % 60);
 //   const minutes = Math.floor( (total/1000/60) % 60)
-  
+
 //   /*Output the clock data as a reusable Object*/
 //   return {
 //     total, 
@@ -107,7 +107,7 @@ clockAdderButton.addEventListener("click", () => {
 //     const startButton = document.querySelector(`${this._selector} [clock-button="start"]`);
 //     const pauseButton = document.querySelector(`${this._selector} [clock-button="pause"]`);
 //     const resetButton = document.querySelector(`${this._selector} [clock-button="reset"]`);
-    
+
 //     startButton.addEventListener("click", () => {
 //       this.start();
 //     });
