@@ -8,7 +8,7 @@ class ClockConfiguration {
     }
 
     configurationChanged() {
-        const event = new CustomEvent("clock-config-changed", this);
+        const event = new CustomEvent("clock-config-changed", {detail: this});
         dispatchEvent(event);
     }
 

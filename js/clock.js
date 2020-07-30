@@ -286,6 +286,7 @@ class Clock {
         clockFooter.className = "clock-footer"
         const delButton = this._createButtonElement("Delete", "delete-button", () => {
             clockContainer.parentNode.removeChild(clockContainer);
+            this.clockDeleted();
         })
 
 
@@ -306,6 +307,10 @@ class Clock {
         clockContainer.append(clockFooter);
     }
 
+    clockDeleted() {
+        const event = new CustomEvent("clock-deleted", { detail: this });
+        dispatchEvent(event);
+    }
 
     _createSVG() {
         const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
