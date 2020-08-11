@@ -49,6 +49,11 @@ class ClockConfiguration {
         return this._seconds
     }
 
+    set isYoutubeLink (ignored) {}
+    get isYoutubeLink() {
+        return ClockConfiguration.isYoutubeLink(this._audioLink)
+    }
+
     toString() {
         return `${this.audioLink}|:|${this.title}|:|${this.minutes}|:|${this.seconds}`;
     }
@@ -59,3 +64,6 @@ ClockConfiguration.fromString = function (urlString) {
     return new ClockConfiguration(splitStr[0], splitStr[1], splitStr[2], splitStr[3]);
 }
 
+ClockConfiguration.isYoutubeLink = function (urlString) {
+    return urlString.match(/http(s?):\/\/www\.youtube\.com\/watch\?v=(.{11})/)
+}

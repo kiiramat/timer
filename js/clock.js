@@ -1,5 +1,6 @@
 class Clock {
     constructor(selector, clockConfiguration) {
+        this.id = Math.ceil(Math.random() * 1000000);
         this.config = clockConfiguration || new ClockConfiguration();
 
         this._endtime;
@@ -8,6 +9,7 @@ class Clock {
 
         //DOM Elements
         this._container = document.querySelector(selector);
+        this._clockDiv = null;
         this._audioLinkInput = null;
         this._minutesInput = null;
         this._secondsInput = null;
@@ -23,7 +25,12 @@ class Clock {
         //audio
         this._audio = null;
         this._canPlay = false;
-        this.setAudio(this.config.audioLink);
+
+        //youtube
+        this._player;
+        this._playerDone = false;
+        this.youtubeVideoId;
+        this._youtubeDivContainer = null;
     }
 
     setAudio(mp3Link) {
@@ -34,6 +41,78 @@ class Clock {
         });
     }
 
+    clearAudio() {
+        this._audio = null;
+        this._canPlay = false;
+    }
+
+    _createYoutubeDiv() {
+        const divTag = document.createElement("div");
+        divTag.id = `youtube-${this.id}`
+        return divTag;
+    }
+
+    createPlayerHelper() {
+        new YT.Player(`youtube-${this.id}`, {
+            height: '0',
+            width: '0',
+            videoId: this.youtubeVideoId,
+            events: {
+                'onReady': (event) => { this.onPlayerReady(event); },
+                'onStateChange': (event) => { this.onPlayerStateChange(event); }
+            }
+        });
+    }
+
+    createPlayer() {
+        if (isPlayerReady) {
+            this.createPlayerHelper();
+        } else {
+            addEventListener("youtube-player-ready", () => {
+                this.createPlayerHelper();
+            });
+        }
+    }
+
+    drawYoutubeElement() {
+        this.youtubeVideoId = this.config.audioLink.substr(this.config.audioLink.lastIndexOf("?v=") + 3);
+
+        this._youtubeDivContainer = document.createElement("div");
+        this._youtubeDivContainer.className = "youtube-audio";
+        const youtubeDiv = this._createYoutubeDiv();
+        this._youtubeDivContainer.append(youtubeDiv);
+        this._clockDiv.append(this._youtubeDivContainer);
+        this.createPlayer()
+    }
+
+    clearYoutube() {
+        this._player = null;
+        this.youtubeVideoId = null;
+        if (this._youtubeDivContainer) {
+            this._youtubeDivContainer.parentNode.removeChild(this._youtubeDivContainer);
+        }
+    }
+
+    //  The API will call this function when the video player is ready.
+    onPlayerReady(event) {
+        this._player = event.target;
+        this._audioLinkInput.value = this._player.playerInfo.videoData.title;
+    }
+
+    //  The API calls this function when the player's state changes.
+    //  The function indicates that when playing a video (state=1),
+    //  the player should play for six seconds and then stop.
+
+    onPlayerStateChange(event) {
+        // if (event.data == YT.PlayerState.PLAYING && !this._playerDone) {
+        //     setTimeout(this.stopVideo, 6000);
+        //     this._playerDone = true;
+        // }
+    }
+
+    stopVideo() {
+        this._player.stopVideo();
+    }
 
     getTimeRemaining() {
         const total = Date.parse(this._endtime) - Date.parse(new Date());
@@ -70,7 +149,9 @@ class Clock {
             this._translationCircleGroup.setAttributeNS(null, 'transform', 'rotate(0)');
             this._waitUntilTheEnd = true;
             this.reset();
-            if (this._canPlay) {
+            if (this.config.isYoutubeLink) {
+                this._player.playVideo();
+            } else if (this._canPlay) {
                 this._audio.play();
             }
         }
@@ -136,8 +217,14 @@ class Clock {
 
         /*audio*/
         if (this.getTimeRemaining().total <= 0) {
-            this._audio.pause();
-            this._audio.currentTime = 0;
+            if (this.config.isYoutubeLink) {
+                this._player.stopVideo();
+                
+            } else if (this._canPlay) {
+                this._audio.pause();
+                this._audio.currentTime = 0;
+            }
+            
         }
     }
 
@@ -153,7 +240,7 @@ class Clock {
     }
 
 
-    drawTitleElement(clockContainer) {
+    drawTitleElement() {
         const headerDiv = document.createElement("div");
         headerDiv.className = 'clock-title';
         const titleInput = this._createTextInputElement("titleId", "title-input", "title", "Insert name");
@@ -165,7 +252,7 @@ class Clock {
 
         headerDiv.append(titleInput);
 
-        clockContainer.append(headerDiv);
+        this._clockDiv.append(headerDiv);
     }
 
 
@@ -173,6 +260,15 @@ class Clock {
         if (linkToStore === undefined || linkToStore === null) {
             return;
         }
+        this.clearAudio();
+        this.clearYoutube();
+
+        //accept youtube link
+        if (ClockConfiguration.isYoutubeLink(linkToStore)) {
+            this.config.audioLink = linkToStore;
+            this.drawYoutubeElement();
+        }
+
         // accept no link or new link
         if (linkToStore === "" || linkToStore.match(/http(s?):\/\/.*\/([^\/]+\.)(.{3})$/gmi)) {
             this.config.audioLink = linkToStore;
@@ -181,7 +277,7 @@ class Clock {
         }
     }
 
-    drawAudioElement(clockContainer) {
+    drawAudioInputElement() {
         const audioDiv = document.createElement("div");
         audioDiv.className = "clock-audio";
         this._audioLinkInput = this._createTextInputElement("audioId", "audio-input", "audio", "Insert audio link");
@@ -204,7 +300,7 @@ class Clock {
         this.storeLink(this.config.audioLink);
 
         audioDiv.append(this._audioLinkInput);
-        clockContainer.append(audioDiv);
+        this._clockDiv.append(audioDiv);
     }
 
 
@@ -239,7 +335,7 @@ class Clock {
     }
 
 
-    drawHtmlElements(clockContainer) {
+    drawHtmlElements() {
         /**
          * minutes and seconds
          */
@@ -285,7 +381,7 @@ class Clock {
         const clockFooter = document.createElement("div");
         clockFooter.className = "clock-footer"
         const delButton = this._createButtonElement("Delete", "delete-button", () => {
-            clockContainer.parentNode.removeChild(clockContainer);
+            this._clockDiv.parentNode.removeChild(this._clockDiv);
             this.clockDeleted();
         })
 
@@ -302,9 +398,9 @@ class Clock {
 
         this._minutesInput = inputMinutes;
         this._secondsInput = inputSeconds;
-        clockContainer.append(clock);
-        clockContainer.append(clockButtons);
-        clockContainer.append(clockFooter);
+        this._clockDiv.append(clock);
+        this._clockDiv.append(clockButtons);
+        this._clockDiv.append(clockFooter);
     }
 
     clockDeleted() {
@@ -353,7 +449,7 @@ class Clock {
     }
 
 
-    drawSVGElements(clockContainer) {
+    drawSVGElements() {
         const circle = document.createElement('div');
         circle.setAttributeNS(null, 'class', 'svg-div');
         const svgElement = this._createSVG();
@@ -371,16 +467,17 @@ class Clock {
         g2Element.append(circle2Element);
         g2Element.append(this._translationCircleGroup);
         this._translationCircleGroup.append(circle3Element);
-        clockContainer.append(circle);
+        this._clockDiv.append(circle);
     }
 
     draw() {
-        var clockDiv = document.createElement("div");
-        clockDiv.className = "clock-div";
-        this.drawTitleElement(clockDiv);
-        this.drawAudioElement(clockDiv);
-        this.drawSVGElements(clockDiv);
-        this.drawHtmlElements(clockDiv);
-        this._container.append(clockDiv);
+        this._clockDiv = document.createElement("div");
+        this._clockDiv.className = "clock-div";
+        this.drawTitleElement();
+        this.drawAudioInputElement();
+        this.drawSVGElements();
+        this.drawHtmlElements();
+        this._container.append(this._clockDiv);
+        this.storeLink(this.config.audioLink);
     }
 }

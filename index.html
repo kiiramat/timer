@@ -22,6 +22,15 @@
 
     </div>
 
+    <script>
+        let isPlayerReady = false;
+        function onYouTubeIframeAPIReady() {
+            isPlayerReady = true;
+            const event = new CustomEvent("youtube-player-ready");
+            dispatchEvent(event);
+        }
+    </script>
+    <script src="js/libs/iframe_api.js"></script>
     <script src="js/keys.js"></script>
     <script src="js/url-handler.js"></script>
     <script src="js/clock-configuration.js"></script>
