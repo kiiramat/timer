@@ -90,7 +90,8 @@ input[type='number'] {
   justify-content: center;
 }
 
-.audio-input {
+.audio-input,
+.short-audio-title {
   outline: 0;
   width: 100%;
   text-align: center;
@@ -246,6 +247,10 @@ input[type='number'] {
   stroke-width: 2px;
 }
 
+.hidden {
+  display: none;
+}
+
 @media only screen and (max-width: 600px) {
   .clock-plus {
     margin:0 auto;
@@ -297,4 +302,6 @@ input[type='number'] {
   .title-input {
     width: 90%;
   }
+
 }
+

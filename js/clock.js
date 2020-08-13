@@ -31,6 +31,8 @@ class Clock {
         this._playerDone = false;
         this.youtubeVideoId;
         this._youtubeDivContainer = null;
+
+        this._shortAudioTitleInput = null;
     }
 
     setAudio(mp3Link) {
@@ -96,7 +98,7 @@ class Clock {
     //  The API will call this function when the video player is ready.
     onPlayerReady(event) {
         this._player = event.target;
-        this._audioLinkInput.value = this._player.playerInfo.videoData.title;
+        this._shortAudioTitleInput.value = this._player.playerInfo.videoData.title;
     }
 
     //  The API calls this function when the player's state changes.
@@ -244,6 +246,7 @@ class Clock {
         const headerDiv = document.createElement("div");
         headerDiv.className = 'clock-title';
         const titleInput = this._createTextInputElement("titleId", "title-input", "title", "Insert name");
+       
         titleInput.addEventListener("input", () => {
             this.config.title = titleInput.value;
             titleInput.value = this.config.title;
@@ -273,7 +276,7 @@ class Clock {
         if (linkToStore === "" || linkToStore.match(/http(s?):\/\/.*\/([^\/]+\.)(.{3})$/gmi)) {
             this.config.audioLink = linkToStore;
             this.setAudio(linkToStore);
-            this._audioLinkInput.value = linkToStore.substr(linkToStore.lastIndexOf('/') + 1);
+            this._shortAudioTitleInput.valueL = linkToStore.substr(linkToStore.lastIndexOf('/') + 1);
         }
     }
 
@@ -281,25 +284,38 @@ class Clock {
         const audioDiv = document.createElement("div");
         audioDiv.className = "clock-audio";
         this._audioLinkInput = this._createTextInputElement("audioId", "audio-input", "audio", "Insert audio link");
+        this._shortAudioTitleInput = this._createTextInputElement("shortAudioTitleId", "short-audio-title", "shortAudio", "");
+        this._shortAudioTitleInput.value = "";
+        this._shortAudioTitleInput.classList.add("hidden");
+        
         this._audioLinkInput.addEventListener("keyup", () => {
             // when you press enter
             if (event.keyCode === KEY.ENTER) {
                 this.storeLink(this._audioLinkInput.value);
+                this._audioLinkInput.classList.add("hidden");
+                this._shortAudioTitleInput.classList.remove("hidden");
             }
-        });
-        this._audioLinkInput.addEventListener("blur", () => {
-            this.storeLink(this._audioLinkInput.value);
         });
 
-        this._audioLinkInput.addEventListener("focus", () => {
+        this._audioLinkInput.addEventListener("blur", () => {
+            this.storeLink(this._audioLinkInput.value);
+            this._audioLinkInput.classList.add("hidden");
+            this._shortAudioTitleInput.classList.remove("hidden");
+        });
+
+        this._shortAudioTitleInput.addEventListener("focus", () => {
             if (this.config.audioLink !== "" && !this.config.isDefaultAudioLink) {
                 this._audioLinkInput.value = this.config.audioLink;
-            }
+            }  
+            this._audioLinkInput.classList.remove("hidden");
+            this._shortAudioTitleInput.classList.add("hidden");
+            this._audioLinkInput.focus();
         });
 
         this.storeLink(this.config.audioLink);
 
         audioDiv.append(this._audioLinkInput);
+        audioDiv.append(this._shortAudioTitleInput);
         this._clockDiv.append(audioDiv);
     }
 
