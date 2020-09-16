@@ -1,8 +1,10 @@
 class ClockConfiguration {
-    constructor(audioLink, title, minutes, seconds) {
-        this._audioLink = audioLink || "audio/true.mp3";
+    constructor(audioLink, shortAudioTitle, title, hours, minutes, seconds) {
+        this._audioLink = audioLink || "../../audio/true.mp3";
+        this._shortAudioTitle = shortAudioTitle || "";
         this.isDefaultAudioLink = !audioLink;
         this._title = title || "";
+        this._hours = hours || "";
         this._minutes = minutes || "";
         this._seconds = seconds || "";
     }
@@ -22,46 +24,60 @@ class ClockConfiguration {
     }
 
 
+    set shortAudioTitle(shortAudioTitle) {
+        this._shortAudioTitle = shortAudioTitle;
+        this.configurationChanged();
+    }
+    get shortAudioTitle() {
+        return this._shortAudioTitle;
+    }
+
+
     set title(title) {
         this._title = title;
         this.configurationChanged();
-
     }
     get title() {
-        return this._title
+        return this._title;
+    }
+
+    set hours(hours) {
+        this._hours = hours;
+        this.configurationChanged();
+    }
+    get hours() {
+        return this._hours;
     }
 
     set minutes(minutes) {
         this._minutes = minutes;
         this.configurationChanged();
-
     }
     get minutes() {
-        return this._minutes
+        return this._minutes;
     }
 
     set seconds(seconds) {
         this._seconds = seconds;
         this.configurationChanged();
-
     }
     get seconds() {
-        return this._seconds
+        return this._seconds;
     }
 
     set isYoutubeLink (ignored) {}
     get isYoutubeLink() {
-        return ClockConfiguration.isYoutubeLink(this._audioLink)
+        return ClockConfiguration.isYoutubeLink(this._audioLink);
     }
 
     toString() {
-        return `${this.audioLink}|:|${this.title}|:|${this.minutes}|:|${this.seconds}`;
+        return `${this.audioLink}|:|${this.shortAudioTitle}|:|${this.title}|:|${this.hours}|:|${this.minutes}|:|${this.seconds}`;
     }
 }
 
 ClockConfiguration.fromString = function (urlString) {
     const splitStr = urlString.split("|:|");
-    return new ClockConfiguration(splitStr[0], splitStr[1], splitStr[2], splitStr[3]);
+    return new ClockConfiguration(splitStr[0], splitStr[1], splitStr[2], splitStr[3], splitStr[4], splitStr[5]);
 }
 
 ClockConfiguration.isYoutubeLink = function (urlString) {

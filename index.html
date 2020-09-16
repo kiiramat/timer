@@ -6,13 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <title>Timer</title>
     <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="styles/timer.css" />
+    <link rel="stylesheet" type="text/css" href="styles/clocks.css" />
 </head>
 
 <body>
     <div id='clockPage'>
-        <div class="plus-container">
-            <button class="clock-plus" clock-adder>+</button>
+        <div class="timer-plus-container">
+            <button class="timer-plus" timer-adder>
+                <img class="timer-icon-button" src="img/timer.svg"/>
+            </button>
+        </div>
+
+        <div class="alarm-plus-container">
+            <button class="alarm-plus" alarm-adder>
+                <img class="alarm-icon-button" src="img/alarm.svg"/>
+            </button>
         </div>
 
         <div class="clocks" clocks-container>
@@ -30,12 +38,27 @@
             dispatchEvent(event);
         }
     </script>
+    <!-- libraries -->
     <script src="js/libs/iframe_api.js"></script>
-    <script src="js/keys.js"></script>
-    <script src="js/url-handler.js"></script>
-    <script src="js/clock-configuration.js"></script>
-    <script src="js/clock.js"></script>
-    <script src="js/timer.js"></script>
+    
+    <!-- constants -->
+    <script src="js/constants/keys.js"></script>
+    
+    <!-- utils -->
+    <script src="js/utils/utilities.js"></script>
+    <script src="js/utils/element-utilities.js"></script>
+    <script src="js/utils/svg-utilities.js"></script>
+
+    <!-- application code -->
+    <script src="js/browser/url-handler.js"></script>
+    <script src="js/clocks/clock-configuration.js"></script>
+    
+    <script src="js/clocks/clock.js"></script>
+    <script src="js/clocks/alarm.js"></script>
+    <script src="js/clocks/timer.js"></script>
+    
+    <!-- entrypoint -->
+    <script src="js/main.js"></script>
 </body>
 
 </html>

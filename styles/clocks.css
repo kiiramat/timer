@@ -5,14 +5,17 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+
 /*Remove arrows inside number input in Firefox*/
 input[type='number'] {
   -moz-appearance:textfield;
 }
 
-.clock-plus {
+
+.timer-plus,
+.alarm-plus {
   position: fixed;
-  margin-top: 430px;
+  margin-top: 250px;
   margin-left: 25px;
 
   border: none;
@@ -31,7 +34,14 @@ input[type='number'] {
   overflow: hidden;
 }
 
-.clock-plus:before {
+
+.alarm-plus {
+  margin-top: 430px;
+}
+
+
+.timer-plus:before,
+.alarm-plus:before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -47,9 +57,22 @@ input[type='number'] {
   transition-timing-function: ease-out;
 }
 
-.clock-plus:hover:before {
+
+.alarm-plus:before {
+  border-color: #82205f;
+}
+
+
+.timer-plus:hover:before,
+.alarm-plus:hover:before {
   transform: translateY(0);
   border-width: 4px;
+}
+
+
+.timer-icon-button,
+.alarm-icon-button {
+  padding-top: 15px;
 }
 
 
@@ -59,14 +82,17 @@ input[type='number'] {
   justify-content: space-evenly;
 }
 
+
 .clock-div {
   margin: 80px 0px 70px;
 }
+
 
 .clock-title {
   display: flex;
   justify-content: center;
 }
+
 
 .title-input {
   outline: 0;
@@ -78,17 +104,24 @@ input[type='number'] {
   color: #3583B6;
   font-size: 40px;
   font-weight: 700;
-  margin-top: 50px;
 }
+
 
 .title-input::placeholder {
   color: #acc5d6;
 }
 
+
+.youtube-audio {
+  display: none;
+}
+
+
 .clock-audio {
   display: flex;
   justify-content: center;
 }
+
 
 .audio-input,
 .short-audio-title {
@@ -104,135 +137,126 @@ input[type='number'] {
   margin-top: 10px;
 }
 
+
 .audio-input::placeholder {
   color: #acc5d6;
 }
 
-.clock {
+
+.alarm-clock-input {
+  width: 600px;
+  height: 403px;
+}
+
+
+.alarm-digits {
+  margin-top: 202px;
+  margin-left: 144px;
+}
+
+
+.timer-clock-input {
   margin-top: -400px;
-  margin-left: 140px;
+  margin-left: 144px;
   font-size: 100px;
 }
 
-.clock-input {
+
+.timer-minutes-input,
+.timer-seconds-input,
+.alarm-hours-input,
+.alarm-minutes-input {
   display: inline-block;
   border: none;
   width: 130px;
   height: 75px;
   text-align: center;
   font-family: 'Acme', sans-serif;
-  font-size: 100px;
+  font-size: 112px;
   color: #3583B6;
   background: transparent;
+  margin-top: 53px;
 }
 
-::placeholder {
+
+.alarm-hours-input,
+.alarm-minutes-input {
+  color: #82205f;
+}
+
+
+.timer-minutes-input::placeholder,
+.timer-seconds-input::placeholder {
   color: #3583B6;
 }
 
-.clock span {
-  margin-right: -15px;
-  margin-left: -15px;
-  color: #3583B6;
+
+.alarm-hours-input::placeholder,
+.alarm-minutes-input::placeholder {
+  color: #82205f;
 }
 
-.clockButtons {
+
+.minutes-letter,
+.seconds-letter,
+.alarm-hours-letter,
+.alarm-minutes-letter {
+  font-size: 45px;
+  color: #3583B6;
+  margin-left: -4px;
+}
+
+.alarm-hours-letter,
+.alarm-minutes-letter,
+.alarm-hours,
+.alarm-minutes {
+  color: #82205f;
+}
+
+
+.timer-clock-buttons {
   display: flex;
-  margin-top: 30px;
-  margin-left: 280px;
+  margin-top: 196px;
+  margin-left: 247px;
 }
+
+
+.alarm-clock-buttons {
+  display: flex;
+  margin-top: -52px;
+  margin-left: 247px;
+}
+
 
 .start-pause-button {
   margin-left: -40px;
 }
 
-.start-button {
+
+.start-button,
+.pause-button,
+.reset-button,
+.delete-button  {
   outline: none;
-  background: transparent;
-  box-sizing: border-box;
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  border-width: 25px 0px 25px 50px;
-  border-color: transparent transparent transparent #3583B6;
+  border: none;
+  background-color: transparent;
 }
 
 
-.start-button:hover {
+.start-button:hover,
+.pause-button:hover,
+.reset-button:hover,
+.delete-button:hover {
   opacity: 0.8;
 }
 
-.pause-button {
-  outline: none;
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  border-radius: 1px;
-  border: 13px solid #3583B6;
-  border-top: none;
-  border-bottom: none;
-}
-
-.reset-button {
-  margin-left: 24px;
-  width: 48px;
-  height: 48px;
-  background-color: #3583B6;
-  border-style: solid;
-  border-color: #3583B6;
-}
-
-.clock-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 150px;
-}
-
-.delete-button {
-  border: none;
-  font-family: 'Acme', sans-serif;
-  font-size: 30px;
-  font-weight: 700;
-  color: #3583B6;
-  background-color: transparent;
-  padding: 10px 10px;
-
-  display: inline-block;
-  vertical-align: middle;
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  position: relative;
-  overflow: hidden;
-}
-
-.delete-button:before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-color: #2098D1;
-  border-style: solid;
-  border-width: 0;
-  transition-property: border-width;
-  transition-duration: 0.1s;
-  transition-timing-function: ease-out;
-}
-
-.delete-button:hover:before,
-.delete-button:focus:before, 
-.delete-button:active:before {
-  transform: translateY(0);
-  border-width: 4px;
-}
 
 .base-circle {
   fill: none;
   stroke: #B6B6B6;
   stroke-width: 4px
 }
+
 
 .progress-circle {
   fill: none;
@@ -241,18 +265,57 @@ input[type='number'] {
   transition: stroke-dashoffset 0.7s;
 }
 
+
 #pointer-circle {
   fill: #FFF;
   stroke: #3583B6;
   stroke-width: 2px;
 }
 
+
+.alarm-seconds-pointer {
+  stroke:#a5868e;
+  stroke-width:1.6;
+  stroke-linecap:round;
+}
+
+
+.alarm-minutes-pointer,
+.alarm-hours-pointer {
+  stroke:#82205f;
+  stroke-width:6px;
+  stroke-linecap:round;
+}
+
+
+.endtime-alarm-hours-pointer {
+  stroke:#f1f1f1;
+  stroke-width:6px;
+  stroke-linecap:round;
+}
+
+
+.alarm-inner-circle {
+  fill:#e8e8e8;
+  stroke:#a5868e;
+  stroke-width:0.5836;
+}
+
+
+.alarm-outer-circle {
+  fill:none;
+  stroke:#82205f;
+  stroke-width:3.99998;
+}
+
+
 .hidden {
   display: none;
 }
 
+
 @media only screen and (max-width: 600px) {
-  .clock-plus {
+  .timer-plus {
     margin:0 auto;
     display:inline-block;
     width:100%;
@@ -261,11 +324,11 @@ input[type='number'] {
     color: white;
   }
 
-  .clock-plus::before{
+  .timer-plus::before{
     border-color: white;
   }
 
-  .plus-container {
+  .timer-plus-container {
     display: flex;
     justify-content: center;
     position: fixed;
@@ -285,12 +348,13 @@ input[type='number'] {
     font-size: 50px;
   }
 
-  .clock-input {
+  .timer-minutes-input,
+  .timer-seconds-input {
     font-size: 50px;
     width: 80px;
   }
 
-  .clockButtons {
+  .timer-clock-buttons {
     margin-top:16px;
     margin-left: 162px
   }
