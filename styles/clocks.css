@@ -217,7 +217,7 @@ input[type='number'] {
 .timer-clock-buttons {
   display: flex;
   margin-top: 196px;
-  margin-left: 247px;
+  margin-left: 214px;
 }
 
 
@@ -225,11 +225,6 @@ input[type='number'] {
   display: flex;
   margin-top: -52px;
   margin-left: 247px;
-}
-
-
-.start-button {
-  margin-left: -40px;
 }
 
 

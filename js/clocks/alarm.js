@@ -71,6 +71,8 @@ class Alarm extends Clock {
         this._endtimeHoursPointer.setAttributeNS(null, 'transform', `translate(75,75) rotate(${endtimeHoursDeg})`);
         this._circle.classList.remove("hidden");
         this._clock.classList.add("hidden");
+        this._resetButton.classList.remove("hidden");
+        this._startButton.classList.add("hidden");
     }
 
 
@@ -80,6 +82,8 @@ class Alarm extends Clock {
         this._reset();
         this._circle.classList.add("hidden");
         this._clock.classList.remove("hidden");
+        this._resetButton.classList.add("hidden");
+        this._startButton.classList.remove("hidden");
     }
 
 
@@ -142,13 +146,12 @@ class Alarm extends Clock {
         this._createDeleteButton();
         const deleteImage = ElementUtilities.createImage("delete-button-image", "../../img/alarmDeleteButton.svg");
 
+        this._resetButton.classList.add("hidden");
+
         const clockButtons = document.createElement("div");
         clockButtons.className = 'alarm-clock-buttons';
-        const startButton = document.createElement("div");
-        startButton.className = 'start-button';
         
-        clockButtons.append(startButton);
-        startButton.append(this._startButton);
+        clockButtons.append(this._startButton);
         this._startButton.append(this._startImage);
         
         clockButtons.append(this._resetButton);
