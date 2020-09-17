@@ -75,7 +75,6 @@ class Alarm extends Clock {
 
 
     reset() {
-        this.pause();
         this._hoursInput.value = "";
         this._minutesInput.value = "";
         this._reset();
@@ -119,27 +118,38 @@ class Alarm extends Clock {
     }
 
 
+    _createStartButton() {
+        /**
+         * start and reset buttons
+         */
+        this._startButton = ElementUtilities.createButtonElement(null, 'start-button', () => {
+            this.start();
+        });
+
+        this._resetButton = ElementUtilities.createButtonElement(null, 'reset-button', () => {
+            this.reset();
+        });
+    }
+
+
     drawHtmlElements() {
         /**
-         * start, pause, reset and delete buttons
+         * start, reset and delete buttons
          */ 
-        this._createStartPauseButton();
+        this._createStartButton();
         this._startImage = ElementUtilities.createImage("start-button-image", "../../img/alarmStartButton.svg");
-        this._pauseImage = ElementUtilities.createImage("pause-button-image", "../../img/alarmPauseButton.svg");
         this._resetImage = ElementUtilities.createImage("reset-button-image", "../../img/alarmResetButton.svg");
         this._createDeleteButton();
         const deleteImage = ElementUtilities.createImage("delete-button-image", "../../img/alarmDeleteButton.svg");
 
         const clockButtons = document.createElement("div");
         clockButtons.className = 'alarm-clock-buttons';
-        const startPauseButton = document.createElement("div");
-        startPauseButton.className = 'start-pause-button';
+        const startButton = document.createElement("div");
+        startButton.className = 'start-button';
         
-        clockButtons.append(startPauseButton);
-        startPauseButton.append(this._startButton);
+        clockButtons.append(startButton);
+        startButton.append(this._startButton);
         this._startButton.append(this._startImage);
-        this._startButton.append(this._pauseImage);
-        this._pauseImage.classList.add("hidden");
         
         clockButtons.append(this._resetButton);
         this._resetButton.append(this._resetImage);

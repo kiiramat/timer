@@ -6,6 +6,7 @@ class Clock {
         this._endtime;
         this._timeInterval = null;
         this._isPlaying = false;
+        this._hasStarted = false;
 
         //DOM Elements
         this._container = document.querySelector(selector);
@@ -132,6 +133,7 @@ class Clock {
 
     _start(endtime) {
         if (endtime === 0) {
+            this._hasStarted = false; 
             return;
         }
         /*set a valid End Date*/
@@ -139,16 +141,7 @@ class Clock {
         this._endtime = new Date(currentTime + endtime);
         this.initializeClock();
         this._isPlaying = true;
-        this._startImage.classList.add("hidden");
-        this._pauseImage.classList.remove("hidden");
-    }
-
-
-    pause() {
-        clearInterval(this._timeInterval);
-        this._isPlaying = false;
-        /*pointer*/
-        this._iteration--;
+        this._hasStarted = true;
     }
 
 
@@ -254,25 +247,6 @@ class Clock {
         audioDiv.append(this._audioLinkInput);
         audioDiv.append(this._shortAudioTitleInput);
         this._clockDiv.append(audioDiv);
-    }
-
-
-    _createStartPauseButton() {
-        /**
-         * start-pause and reset buttons
-         */
-        this._startButton = ElementUtilities.createButtonElement(null, 'start-button', () => {
-            if (this._isPlaying) {
-                this.pause();
-                this._startImage.classList.remove("hidden");
-                this._pauseImage.classList.add("hidden");
-            } else {
-                this.start();
-            }
-        });
-        this._resetButton = ElementUtilities.createButtonElement(null, 'reset-button', () => {
-            this.reset();
-        });
     }
 
 

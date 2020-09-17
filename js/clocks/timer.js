@@ -52,6 +52,18 @@ class Timer extends Clock {
         const userMinutes = this._minutesInput.value * 60 * 1000;
         const userSeconds = this._secondsInput.value * 1000;
         this._start(userMinutes + userSeconds);
+        if (this._hasStarted) {
+            this._startImage.classList.add("hidden");
+            this._pauseImage.classList.remove("hidden");
+        }
+    }
+
+
+    pause() {
+        clearInterval(this._timeInterval);
+        this._isPlaying = false;
+        /*pointer*/
+        this._iteration--;
     }
 
 
@@ -61,7 +73,7 @@ class Timer extends Clock {
         this._secondsInput.value = "";
         this._startImage.classList.remove('hidden');
         this._pauseImage.classList.add("hidden");
-        
+
         /*for pointer calculation in updateClock*/
         this._divideCircleInXParts = 0;
         this._iteration = 1;
@@ -102,6 +114,25 @@ class Timer extends Clock {
         this._secondsLetter = document.createElement("span");
         this._secondsLetter.className = "seconds-letter";
         this._secondsLetter.innerHTML = "s";
+    }
+
+
+    _createStartPauseButton() {
+        /**
+         * start-pause and reset buttons
+         */
+        this._startButton = ElementUtilities.createButtonElement(null, 'start-button', () => {
+            if (this._isPlaying) {
+                this.pause();
+                this._startImage.classList.remove("hidden");
+                this._pauseImage.classList.add("hidden");
+            } else {
+                this.start();
+            }
+        });
+        this._resetButton = ElementUtilities.createButtonElement(null, 'reset-button', () => {
+            this.reset();
+        });
     }
 
 

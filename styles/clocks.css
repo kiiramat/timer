@@ -228,7 +228,7 @@ input[type='number'] {
 }
 
 
-.start-pause-button {
+.start-button {
   margin-left: -40px;
 }
 
@@ -311,6 +311,7 @@ input[type='number'] {
 
 .hidden {
   display: none;
+  width: 0px;
 }
 
 
