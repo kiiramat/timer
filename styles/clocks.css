@@ -150,8 +150,12 @@ input[type='number'] {
 
 
 .alarm-digits {
+  width: 340px;
+  height: 180px;
+  padding-left: 20px;
+  border: 14px dotted #82205f;
   margin-top: 202px;
-  margin-left: 144px;
+  margin-left: 113px;
 }
 
 
@@ -249,7 +253,7 @@ input[type='number'] {
 .base-circle {
   fill: none;
   stroke: #B6B6B6;
-  stroke-width: 4px
+  stroke-width: 4px;
 }
 
 
