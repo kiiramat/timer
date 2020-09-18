@@ -5,8 +5,15 @@ class Clock {
 
         this._endtime;
         this._timeInterval = null;
+
+        //for timer use
         this._isPlaying = false;
         this._hasStarted = false;
+
+        //original users input - for alarm use
+        this._hasInput = true;
+        this._hoursInitialUserInput = null;
+        this._minutesInitialUserInput = null;
 
         //DOM Elements
         this._container = document.querySelector(selector);
@@ -139,9 +146,21 @@ class Clock {
         /*set a valid End Date*/
         const currentTime = Date.parse(new Date());
         this._endtime = new Date(currentTime + endtime);
+        if (this._hasInput) {
+            this._hoursInitialUserInput = this._hoursInput.value;
+            this._minutesInitialUserInput = this._minutesInput.value;
+            console.log(this._hoursInitialUserInput);
+            console.log(this._minutesInitialUserInput);
+            this._hasInput = false;
+        }
         this.initializeClock();
         this._isPlaying = true;
         this._hasStarted = true;
+    }
+
+
+    _pause() {
+        clearInterval(this._timeInterval);
     }
 
 

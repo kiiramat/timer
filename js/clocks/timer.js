@@ -60,7 +60,7 @@ class Timer extends Clock {
 
 
     pause() {
-        clearInterval(this._timeInterval);
+        this._pause();
         this._isPlaying = false;
         /*pointer*/
         this._iteration--;

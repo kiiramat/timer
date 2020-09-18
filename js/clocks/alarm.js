@@ -64,11 +64,13 @@ class Alarm extends Clock {
         const userHours = this._hoursInput.value * 1000 * 60 * 60;
         const userMinutes = this._minutesInput.value * 60 * 1000;
         this._start(userHours + userMinutes);
+
         /**
          * endtime hours pointer calculation
          */
         const endtimeHoursDeg = ((this._hoursInput.value * (360/12)) + (((360/12)/60) * this._minutesInput.value));
         this._endtimeHoursPointer.setAttributeNS(null, 'transform', `translate(75,75) rotate(${endtimeHoursDeg})`);
+
         this._circle.classList.remove("hidden");
         this._clock.classList.add("hidden");
         this._resetButton.classList.remove("hidden");
@@ -77,8 +79,9 @@ class Alarm extends Clock {
 
 
     reset() {
-        this._hoursInput.value = "";
-        this._minutesInput.value = "";
+        this._pause();
+        this._hoursInput.value = this._hoursInitialUserInput;
+        this._minutesInput.value = this._minutesInitialUserInput;
         this._reset();
         this._circle.classList.add("hidden");
         this._clock.classList.remove("hidden");
