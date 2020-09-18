@@ -11,7 +11,7 @@ class Clock {
         this._hasStarted = false;
 
         //original users input - for alarm use
-        this._hasInput = true;
+        this._acceptsNewInput = false;
         this._hoursInitialUserInput = null;
         this._minutesInitialUserInput = null;
 
@@ -19,6 +19,7 @@ class Clock {
         this._container = document.querySelector(selector);
         this._clockDiv = null;
         this._audioLinkInput = null;
+        this._hoursInput = null;
         this._minutesInput = null;
         this._minutesLetter = null;
         this._secondsInput = null;
@@ -146,13 +147,14 @@ class Clock {
         /*set a valid End Date*/
         const currentTime = Date.parse(new Date());
         this._endtime = new Date(currentTime + endtime);
-        if (this._hasInput) {
+        
+        // keeps users original input for alarm
+        if (this._acceptsNewInput) {
             this._hoursInitialUserInput = this._hoursInput.value;
             this._minutesInitialUserInput = this._minutesInput.value;
-            console.log(this._hoursInitialUserInput);
-            console.log(this._minutesInitialUserInput);
-            this._hasInput = false;
+            this._acceptsNewInput = false;
         }
+        
         this.initializeClock();
         this._isPlaying = true;
         this._hasStarted = true;

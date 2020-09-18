@@ -2,7 +2,6 @@ class Alarm extends Clock {
     constructor(selector, clockConfiguration) {
         super(selector, clockConfiguration);
         
-        this._hoursInput = null;
         this._clock = null;
         this._circle = null;
         
@@ -63,6 +62,7 @@ class Alarm extends Clock {
          */
         const userHours = this._hoursInput.value * 1000 * 60 * 60;
         const userMinutes = this._minutesInput.value * 60 * 1000;
+        this._acceptsNewInput = true;
         this._start(userHours + userMinutes);
 
         /**
@@ -82,6 +82,7 @@ class Alarm extends Clock {
         this._pause();
         this._hoursInput.value = this._hoursInitialUserInput;
         this._minutesInput.value = this._minutesInitialUserInput;
+        this._acceptsNewInput = true;
         this._reset();
         this._circle.classList.add("hidden");
         this._clock.classList.remove("hidden");
