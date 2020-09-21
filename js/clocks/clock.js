@@ -18,6 +18,7 @@ class Clock {
         //DOM Elements
         this._container = document.querySelector(selector);
         this._clockDiv = null;
+        this._titleInput = null;
         this._audioLinkInput = null;
         this._hoursInput = null;
         this._minutesInput = null;
@@ -180,29 +181,18 @@ class Clock {
     }
 
 
-    _createTextInputElement(id, className, name, placeholder) {
-        const input = document.createElement("input");
-        input.setAttribute("type", "text");
-        input.setAttribute("id", id);
-        input.setAttribute("class", className);
-        input.setAttribute("name", name);
-        input.setAttribute("placeholder", placeholder);
-        return input;
-    }
-
-
-    drawTitleElement() {
+    _drawTitleElement() {
         const headerDiv = document.createElement("div");
         headerDiv.className = 'clock-title';
-        const titleInput = this._createTextInputElement("titleId", "title-input", "title", "Insert name");
+        this._titleInput = ElementUtilities.createTextInputElement("titleId", "title-input", "title", "Insert name");
        
-        titleInput.addEventListener("input", () => {
-            this.config.title = titleInput.value;
-            titleInput.value = this.config.title;
+        this._titleInput.addEventListener("input", () => {
+            this.config.title = this._titleInput.value;
+            this._titleInput.value = this.config.title;
         });
-        titleInput.value = this.config.title;
+        this._titleInput.value = this.config.title;
 
-        headerDiv.append(titleInput);
+        headerDiv.append(this._titleInput);
 
         this._clockDiv.append(headerDiv);
     }
@@ -235,11 +225,11 @@ class Clock {
         }
     }
 
-    drawAudioInputElement() {
+    _drawAudioInputElement() {
         const audioDiv = document.createElement("div");
         audioDiv.className = "clock-audio";
-        this._audioLinkInput = this._createTextInputElement("audioId", "audio-input", "audio", "Insert audio link");
-        this._shortAudioTitleInput = this._createTextInputElement("shortAudioTitleId", "short-audio-title", "shortAudio", "");
+        this._audioLinkInput = ElementUtilities.createTextInputElement("audioId", "audio-input", "audio", "Insert audio link");
+        this._shortAudioTitleInput = ElementUtilities.createTextInputElement("shortAudioTitleId", "short-audio-title", "shortAudio", "");
         this._shortAudioTitleInput.value = "";
         this._shortAudioTitleInput.classList.add("hidden");
         

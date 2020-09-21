@@ -91,6 +91,19 @@ class Timer extends Clock {
     }
 
 
+    drawTitleElement() {
+        this._drawTitleElement();
+        this._titleInput.classList.add("timer-input");
+    }
+
+
+    drawAudioInputElement() {
+        this._drawAudioInputElement();
+        this._audioLinkInput.classList.add("timer-audio-input");
+        this._shortAudioTitleInput.classList.add("timer-short-audio-title");
+    }
+
+
     _createMinutesAndSeconds() {
         /**
          * minutes and seconds

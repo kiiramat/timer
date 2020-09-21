@@ -1,5 +1,15 @@
 const ElementUtilities = {}
 
+ElementUtilities.createTextInputElement = (id, className, name, placeholder) => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("id", id);
+    input.setAttribute("class", className);
+    input.setAttribute("name", name);
+    input.setAttribute("placeholder", placeholder);
+    return input;
+}
+
 ElementUtilities.createNumberInputElement = (className, max, clockSetter, placeholder, func) => {
     const input = document.createElement("input");
     input.setAttribute("class", className);

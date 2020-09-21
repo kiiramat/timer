@@ -94,6 +94,19 @@ class Alarm extends Clock {
     }
 
 
+    drawTitleElement() {
+        this._drawTitleElement();
+        this._titleInput.classList.add("alarm-input");
+    }
+
+
+    drawAudioInputElement() {
+        this._drawAudioInputElement();
+        this._audioLinkInput.classList.add("alarm-audio-input");
+        this._shortAudioTitleInput.classList.add("alarm-short-audio-title");
+    }
+
+
     drawTimeInput() {
         this._hoursInput = ElementUtilities.createNumberInputElement('alarm-hours-input', "23", "alarm-hours", "00", () => {
             this.config.hours = Utilities.padValue(this._hoursInput.value);

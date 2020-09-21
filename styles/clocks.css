@@ -99,16 +99,31 @@ input[type='number'] {
   width: 40%;
   text-align: center;
   border-width: 0 0 2px;
-  border-color: #3583B6;
   font-family: 'Acme', sans-serif;
-  color: #3583B6;
   font-size: 40px;
   font-weight: 700;
 }
 
 
-.title-input::placeholder {
+.timer-input {
+  border-color: #3583B6;
+  color: #3583B6;
+}
+
+
+.alarm-input {
+  border-color: #82205f;
+  color: #82205f;
+}
+
+
+.timer-input::placeholder {
   color: #acc5d6;
+}
+
+
+.alarm-input::placeholder {
+  color: #82205f;
 }
 
 
@@ -129,17 +144,34 @@ input[type='number'] {
   width: 100%;
   text-align: center;
   border: none;
-  border-color: #3583B6;
   font-family: 'Acme', sans-serif;
-  color: #3583B6;
   font-size: 20px;
   font-weight: 700;
   margin-top: 10px;
 }
 
 
-.audio-input::placeholder {
+.timer-audio-input,
+.timer-short-audio-title {
+  border-color: #3583B6;
+  color: #3583B6;
+}
+
+
+.alarm-audio-input,
+.alarm-short-audio-title {
+  border-color: #82205f;
+  color: #82205f;
+}
+
+
+.timer-audio-input::placeholder {
   color: #acc5d6;
+}
+
+
+.alarm-audio-input::placeholder {
+  color: #82205f;
 }
 
 
