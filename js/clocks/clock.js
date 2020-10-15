@@ -1,7 +1,14 @@
 class Clock {
     constructor(selector, clockConfiguration) {
+        if(!clockConfiguration){
+            throw new Error("No clockConfiguration available");
+        }
+        if(clockConfiguration.type === ClockTypes.invalid){
+            throw new Error("Invalid clock type");
+        }
+
         this.id = Math.ceil(Math.random() * 1000000);
-        this.config = clockConfiguration || new ClockConfiguration();
+        this.config = clockConfiguration;
 
         this._endtime;
         this._timeInterval = null;
@@ -135,49 +142,8 @@ class Clock {
     }
 
 
-    getTimeRemaining() {
-        return Utilities.getTimeRemaining(this._endtime);
-    }
-    
-
-    _start(endtime) {
-        if (endtime === 0) {
-            this._hasStarted = false; 
-            return;
-        }
-        /*set a valid End Date*/
-        const currentTime = Date.parse(new Date());
-        this._endtime = new Date(currentTime + endtime);
-        
-        // keeps users original input for alarm
-        if (this._acceptsNewInput) {
-            this._hoursInitialUserInput = this._hoursInput.value;
-            this._minutesInitialUserInput = this._minutesInput.value;
-            this._acceptsNewInput = false;
-        }
-        
-        this.initializeClock();
-        this._isPlaying = true;
-        this._hasStarted = true;
-    }
-
-
     _pause() {
         clearInterval(this._timeInterval);
-    }
-
-
-    _reset() {
-        /*audio*/
-        if (this.getTimeRemaining().total <= 0) {
-            if (this.config.isYoutubeLink) {
-                this._player.stopVideo();
-                
-            } else if (this._canPlay) {
-                this._audio.pause();
-                this._audio.currentTime = 0;
-            }
-        }
     }
 
 

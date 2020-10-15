@@ -1,16 +1,21 @@
 class Timer extends Clock {
     constructor (selector, clockConfiguration) {
-        super(selector, clockConfiguration);
+        const _clockConfiguration = clockConfiguration || new ClockConfiguration();
+        _clockConfiguration.type = ClockTypes.timer;
+        super(selector, _clockConfiguration);
 
         this._secondsLetter = null;
     }
 
 
-    _updateClock() {
-        const t = this.getTimeRemaining();
+    getTimeRemainingForTimer() {
+        return Utilities.getTimeRemainingForTimer(this._endtime);
+    }
 
-        /*clock variable to store a reference yo the clock container div*/
-        /*only updates the numbers instead of the full clock*/
+
+    _updateClock() {
+        const t = this.getTimeRemainingForTimer();
+        
         this._minutesInput.value = ('0' + t.minutes).slice(-2);
         this._secondsInput.value = ('0' + t.seconds).slice(-2);
 
@@ -43,6 +48,21 @@ class Timer extends Clock {
             this._updateClock();
         }, 1000);
     }
+
+
+    _startTimer(endtime) {
+        if (endtime === 0) {
+            this._hasStarted = false; 
+            return;
+        }
+        /*set a valid End Date for timer*/
+        const currentTime = Date.parse(new Date());
+        this._endtime = new Date(currentTime + endtime);
+        
+        this.initializeClock();
+        this._isPlaying = true;
+        this._hasStarted = true;
+    }
     
 
     start() {
@@ -51,7 +71,7 @@ class Timer extends Clock {
          */
         const userMinutes = this._minutesInput.value * 60 * 1000;
         const userSeconds = this._secondsInput.value * 1000;
-        this._start(userMinutes + userSeconds);
+        this._startTimer(userMinutes + userSeconds);
         if (this._hasStarted) {
             this._startImage.classList.add("hidden");
             this._pauseImage.classList.remove("hidden");
@@ -87,7 +107,16 @@ class Timer extends Clock {
         } else {
             this._translationCircleGroup.setAttributeNS(null, 'transform', 'rotate(360)');
         }
-        this._reset();
+        
+        /*audio*/
+        if (this.getTimeRemainingForTimer().total <= 0) {
+            if (this.config.isYoutubeLink) {
+                this._player.stopVideo();
+            } else if (this._canPlay) {
+                this._audio.pause();
+                this._audio.currentTime = 0;
+            }
+        }
     }
 
 
@@ -100,7 +129,7 @@ class Timer extends Clock {
     drawAudioInputElement() {
         this._drawAudioInputElement();
         this._audioLinkInput.classList.add("timer-audio-input");
-        this._shortAudioTitleInput.classList.add("timer-short-audio-title");
+            this._shortAudioTitleInput.classList.add("timer-short-audio-title");
     }
 
 

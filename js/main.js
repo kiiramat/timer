@@ -6,7 +6,11 @@ if (location.hash === '') {
 } else {
     const clocksConfiguration = URL_HANDLER.pullFromUrl();
     clocksConfiguration.forEach((clockConfig) => {
-        clocks.push(new Timer("[clocks-container]", clockConfig));
+        if (clockConfig.type === ClockTypes.timer){
+            clocks.push(new Timer("[clocks-container]", clockConfig));
+        } else if (clockConfig.type === ClockTypes.alarm){
+            clocks.push(new Alarm("[clocks-container]", clockConfig));
+        }      
     })
 }
 

@@ -1,9 +1,20 @@
 class Alarm extends Clock {
     constructor(selector, clockConfiguration) {
-        super(selector, clockConfiguration);
+        const _clockConfiguration = clockConfiguration || new ClockConfiguration();
+        _clockConfiguration.type = ClockTypes.alarm;
+        super(selector, _clockConfiguration);
         
         this._clock = null;
         this._circle = null;
+
+        //time variables
+        this._alarmUserHours = null;
+        this._alarmUserMinutes = null;
+        this._endtimeInMin = null;
+        this._nowTimeInMin = null;
+
+        //buttons
+        this._resetButtonOn = false;
         
         //pointers
         this._endtimeHoursPointer = null;
@@ -13,13 +24,14 @@ class Alarm extends Clock {
     }
 
 
-    _updateClock() {
-        const t = this.getTimeRemaining();
+    getTimeRemainingForAlarm() {
+        this._nowTimeInMin = (new Date().getHours() * 60) + new Date().getMinutes();
+        return Utilities.getRemainingTimeForAlarm(this._endtimeInMin, this._nowTimeInMin);
+    }
 
-        /*clock variable to store a reference yo the clock container div*/
-        /*only updates the numbers instead of the full clock*/
-        this._hoursInput.value = ('0' + t.hours).slice(-2);
-        this._minutesInput.value = ('0' + t.minutes).slice(-2);
+
+    _updateClock() {
+        this.getTimeRemainingForAlarm();
 
         /**
          * hours, minutes and seconds pointer calculation
@@ -33,16 +45,20 @@ class Alarm extends Clock {
         const secondsDeg = ((new Date().getSeconds() * 360) / 60);
         this._secondsPointer.setAttributeNS(null, 'transform', `translate(75,75) rotate(${secondsDeg})`);
 
+
         /*time reaches zero*/
-        if (t.total <= 0) {
-            this._translationCircleGroup.setAttributeNS(null, 'transform', 'rotate(0)');
-            this._waitUntilTheEnd = true;
+        if (this.getTimeRemainingForAlarm() === 0 && new Date().getSeconds() === 0) {
             this.reset();
+
             if (this.config.isYoutubeLink) {
                 this._player.playVideo();
             } else if (this._canPlay) {
                 this._audio.play();
             }
+
+            this._resetButton.classList.remove("hidden");
+            this._startButton.classList.add("hidden");
+            this._resetButtonOn = true;
         }
     }
 
@@ -56,14 +72,27 @@ class Alarm extends Clock {
     }
 
 
+
+    _startAlarm(timeSum) {
+        if (timeSum === 0){
+            this._hasStarted = false;
+            return;
+        }
+        this.initializeClock();
+        this._isPlaying = true;
+        this._hasStarted = true;
+    }
+
+
     start() {
         /**
          * transform user input to miliseconds
          */
-        const userHours = this._hoursInput.value * 1000 * 60 * 60;
-        const userMinutes = this._minutesInput.value * 60 * 1000;
-        this._acceptsNewInput = true;
-        this._start(userHours + userMinutes);
+        this._alarmUserHours = Number(this._hoursInput.value);
+        this._alarmUserMinutes = Number(this._minutesInput.value);
+        this._endtimeInMin = (this._alarmUserHours * 60) + this._alarmUserMinutes
+        this._startAlarm(this._endtimeInMin);
+        
 
         /**
          * endtime hours pointer calculation
@@ -83,10 +112,22 @@ class Alarm extends Clock {
 
     reset() {
         this._pause();
-        this._hoursInput.value = this._hoursInitialUserInput;
-        this._minutesInput.value = this._minutesInitialUserInput;
-        this._acceptsNewInput = true;
-        this._reset();
+
+        if (this._resetButtonOn === true) {
+            /*audio*/
+            if (this.config.isYoutubeLink) {
+                this._player.stopVideo();    
+            } else if (this._canPlay) {
+                this._audio.pause();
+                this._audio.currentTime = 0;
+            } 
+            
+            this._resetButton.classList.add("hidden");
+            this._startButton.classList.remove("hidden");
+            this._resetButtonOn = false;
+            return;
+        }
+
         this._circle.classList.add("hidden");
         this._clock.classList.remove("hidden");
         this._resetButton.classList.add("hidden");

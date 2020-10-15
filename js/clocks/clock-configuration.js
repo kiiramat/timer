@@ -1,16 +1,26 @@
+'use strict';
+
+const ClockTypes = {
+    "alarm": "ALARM",
+    "timer": "TIMER",
+    "invalid": null
+};
+
+const CLOCK_CONFIG_PROPERTY_DELIMITER = "|:|";
+
 class ClockConfiguration {
-    constructor(audioLink, shortAudioTitle, title, hours, minutes, seconds) {
+    constructor(type, audioLink, shortAudioTitle, title, biggerTimeElement, smallerTimeElement) {
         this._audioLink = audioLink || "../../audio/true.mp3";
         this._shortAudioTitle = shortAudioTitle || "";
         this.isDefaultAudioLink = !audioLink;
         this._title = title || "";
-        this._hours = hours || "";
-        this._minutes = minutes || "";
-        this._seconds = seconds || "";
+        this._biggerTimeElement = biggerTimeElement || "";
+        this._smallerTimeElement = smallerTimeElement || "";
+        this.type = type || null;
     }
 
     configurationChanged() {
-        const event = new CustomEvent("clock-config-changed", {detail: this});
+        const event = new CustomEvent("clock-config-changed", { detail: this });
         dispatchEvent(event);
     }
 
@@ -42,41 +52,60 @@ class ClockConfiguration {
     }
 
     set hours(hours) {
-        this._hours = hours;
-        this.configurationChanged();
+        if (this.type === ClockTypes.alarm) {
+            this._biggerTimeElement = hours;
+            this.configurationChanged();
+        }
     }
     get hours() {
-        return this._hours;
+        if (this.type === ClockTypes.alarm) {
+            return this._biggerTimeElement;
+        }
+        return 0;
     }
 
     set minutes(minutes) {
-        this._minutes = minutes;
+        if (this.type === ClockTypes.alarm) {
+            this._smallerTimeElement = minutes;
+        } else if (this.type === ClockTypes.timer) {
+            this._biggerTimeElement = minutes;
+        }
         this.configurationChanged();
     }
     get minutes() {
-        return this._minutes;
+        if (this.type === ClockTypes.alarm) {
+            return this._smallerTimeElement;
+        }
+        if (this.type === ClockTypes.timer) {
+            return this._biggerTimeElement;
+        }
+        return 0;
     }
 
     set seconds(seconds) {
-        this._seconds = seconds;
-        this.configurationChanged();
+        if (this.type === ClockTypes.timer) {
+            this._smallerTimeElement = seconds;
+            this.configurationChanged();
+        }
     }
     get seconds() {
-        return this._seconds;
+        if (this.type === ClockTypes.timer) {
+            return this._smallerTimeElement;
+        }
+        return 0;
     }
 
-    set isYoutubeLink (ignored) {}
     get isYoutubeLink() {
         return ClockConfiguration.isYoutubeLink(this._audioLink);
     }
 
     toString() {
-        return `${this.audioLink}|:|${this.shortAudioTitle}|:|${this.title}|:|${this.hours}|:|${this.minutes}|:|${this.seconds}`;
+        return [this.type,this.audioLink,this.shortAudioTitle,this.title,this._biggerTimeElement,this._smallerTimeElement].join(CLOCK_CONFIG_PROPERTY_DELIMITER);
     }
 }
 
 ClockConfiguration.fromString = function (urlString) {
-    const splitStr = urlString.split("|:|");
+    const splitStr = urlString.split(CLOCK_CONFIG_PROPERTY_DELIMITER);
     return new ClockConfiguration(splitStr[0], splitStr[1], splitStr[2], splitStr[3], splitStr[4], splitStr[5]);
 }
 

@@ -5,19 +5,25 @@ const Utilities = {}
  * @param {Number} endtime 
  * @returns {*} JSON structure with hours, minutes and seconds and the total time as milliseconds 
  */
-Utilities.getTimeRemaining = (endtime) => {
+Utilities.getTimeRemainingForTimer = (endtime) => {
     const total = Date.parse(endtime) - Date.parse(new Date());
     const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    const hours = Math.floor((total / (1000*60*60)) % 24);
+    const minutes = Math.floor(total / 1000 / 60);
 
     /*Output the clock data as a reusable Object*/
     return {
         total,
-        hours,
         minutes,
         seconds
     };
+}
+
+
+Utilities.getRemainingTimeForAlarm = (userTimeinMin, nowTimeInMin) => {
+    if (userTimeinMin >= nowTimeInMin){
+        return userTimeinMin - nowTimeInMin;
+    }
+    return (24 * 60) - (nowTimeInMin - userTimeinMin);
 }
 
 

@@ -1,4 +1,4 @@
-const CLOCK_CONFIG_DELIMITER = "||::||";
+const CLOCK_CONFIG_DELIMITER = "||::||"; //Separates one config from another
 
 class UrlHandler {
     constructor() { }
