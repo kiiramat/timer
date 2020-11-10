@@ -192,11 +192,11 @@ class Timer extends Clock {
          * start, pause, reset and delete buttons
          */ 
         this._createStartPauseButton();
-        this._startImage = ElementUtilities.createImage("start-button-image", "../../img/timerStartButton.svg");
-        this._pauseImage = ElementUtilities.createImage("pause-button-image", "../../img/timerPauseButton.svg");
-        this._resetImage = ElementUtilities.createImage("reset-button-image", "../../img/timerResetButton.svg");
+        this._startImage = ElementUtilities.createImage("start-button-image", "img/timerStartButton.svg");
+        this._pauseImage = ElementUtilities.createImage("pause-button-image", "img/timerPauseButton.svg");
+        this._resetImage = ElementUtilities.createImage("reset-button-image", "img/timerResetButton.svg");
         this._createDeleteButton();
-        const deleteImage = ElementUtilities.createImage("delete-button-image", "../../img/timerDeleteButton.svg");
+        const deleteImage = ElementUtilities.createImage("delete-button-image", "img/timerDeleteButton.svg");
 
         const clockButtons = document.createElement("div");
         clockButtons.className = 'timer-clock-buttons';
