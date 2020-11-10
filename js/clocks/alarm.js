@@ -74,13 +74,8 @@ class Alarm extends Clock {
 
 
     _startAlarm(timeSum) {
-        if (timeSum === 0){
-            this._hasStarted = false;
-            return;
-        }
         this.initializeClock();
         this._isPlaying = true;
-        this._hasStarted = true;
     }
 
 
@@ -100,13 +95,11 @@ class Alarm extends Clock {
         const endtimeHoursDeg = ((this._hoursInput.value * (360/12)) + (((360/12)/60) * this._minutesInput.value));
         this._endtimeHoursPointer.setAttributeNS(null, 'transform', `translate(75,75) rotate(${endtimeHoursDeg})`);
 
-        if (this._hasStarted) {
-            this._circle.classList.remove("hidden");
-            this._clock.classList.add("hidden");
-            this._resetButton.classList.remove("hidden");
-            this._startButton.classList.add("hidden");
-        }
         
+        this._circle.classList.remove("hidden");
+        this._clock.classList.add("hidden");
+        this._resetButton.classList.remove("hidden");
+        this._startButton.classList.add("hidden");     
     }
 
 
