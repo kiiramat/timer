@@ -202,10 +202,10 @@ class Alarm extends Clock {
          * start, reset and delete buttons
          */ 
         this._createStartButton();
-        this._startImage = ElementUtilities.createImage("start-button-image", "../../img/alarmStartButton.svg");
-        this._resetImage = ElementUtilities.createImage("reset-button-image", "../../img/alarmResetButton.svg");
+        this._startImage = ElementUtilities.createImage("start-button-image", "img/alarmStartButton.svg");
+        this._resetImage = ElementUtilities.createImage("reset-button-image", "img/alarmResetButton.svg");
         this._createDeleteButton();
-        const deleteImage = ElementUtilities.createImage("delete-button-image", "../../img/alarmDeleteButton.svg");
+        const deleteImage = ElementUtilities.createImage("delete-button-image", "img/alarmDeleteButton.svg");
 
         this._resetButton.classList.add("hidden");
 
