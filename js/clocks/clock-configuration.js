@@ -10,7 +10,7 @@ const CLOCK_CONFIG_PROPERTY_DELIMITER = "|:|";
 
 class ClockConfiguration {
     constructor(type, audioLink, shortAudioTitle, title, biggerTimeElement, smallerTimeElement) {
-        this._audioLink = audioLink || "../../audio/true.mp3";
+        this._audioLink = audioLink || "audio/true.mp3";
         this._shortAudioTitle = shortAudioTitle || "";
         this.isDefaultAudioLink = !audioLink;
         this._title = title || "";
