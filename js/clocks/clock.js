@@ -184,7 +184,7 @@ class Clock {
             this._shortAudioTitleInput.value = linkToStore.substr(linkToStore.lastIndexOf('/') + 1);
             this.config.shortAudioTitle = this._shortAudioTitleInput.value;
             this._shortAudioTitleInput.value = this.config.shortAudioTitle;
-            if(this.config.audioLink !== "../../audio/true.mp3") {
+            if(this.config.audioLink !== "audio/true.mp3") {
                 this._audioLinkInput.classList.add("hidden");
                 this._shortAudioTitleInput.classList.remove("hidden");
             }
