@@ -347,57 +347,115 @@ input[type='number'] {
 
 
 @media only screen and (max-width: 600px) {
-  .timer-plus {
+  /* format buttons */
+  .timer-plus,
+  .alarm-plus {
     margin:0 auto;
+    width: 60px;
     display:inline-block;
-    width:100%;
     position: relative;
-    background: #3583B6;
-    color: white;
+    top: 0px;
+    background: #d9ebf7;
+    border: solid;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 
-  .timer-plus::before{
-    border-color: white;
+  .alarm-plus {
+    background: #eccbe0;
+    color: #82205f;
   }
 
   .timer-plus-container {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     position: fixed;
     top: 0;
-    left: 0;
+    right: 60px;
+  }
+
+  .alarm-plus-container {
+    display: flex;
+    justify-content: right;
+    position: fixed;
+    top: 0;
     right: 0;
   }
+
+  .timer-icon-button,
+  .alarm-icon-button {
+    width:100%;
+  }
+
+  /* cancel hovering effect of buttons */
+  .timer-plus:hover:before,
+  .alarm-plus:hover:before {
+    transform: none;
+    border-width: 0px;
+  }
+
+  /* title */
+  .title-input {
+    width: 80%;
+  }
+
+
+  /* alarm input */
+  .alarm-clock-input {
+    width: 340px;
+    height: 377px;
+    margin-top: 75px;  
+  }
+
+
+  .alarm-digits {
+    margin: 0 auto;
+    width: 252px;
+    height: 100px;
+    padding-left: 14px;
+  }
+
+  .alarm-hours-input, 
+  .alarm-minutes-input {
+    font-size: 75px;
+    margin-top: 10px;
+    width: 90px;
+  }
+
+  .alarm-svg-div {
+    margin-bottom: 140px;
+  }
+
 
   .svg-clock {
     width:360px;
     height:360px;
   }
 
-  .clock {
-    margin-top: -255px;
-    margin-left: 92px;
-    font-size: 50px;
-  }
-
   .timer-minutes-input,
   .timer-seconds-input {
-    font-size: 50px;
+    font-size: 65px;
     width: 80px;
+  } 
+
+  .timer-clock-input {
+    margin-top: -280px;
+    margin-left: 70px;
   }
 
+  /* timer and alarm buttons */
   .timer-clock-buttons {
-    margin-top:16px;
-    margin-left: 162px
+    margin-top:110px;
+    margin-left: 93px;
   }
 
-  .clock-footer {
-    margin-top: 75px;
+  .alarm-clock-buttons {
+    margin-top: -155px;
+    margin-left: 120px;
   }
 
-  .title-input {
-    width: 90%;
-  }
+  
 
 }
 

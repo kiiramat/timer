@@ -55,6 +55,7 @@ class Alarm extends Clock {
             } else if (this._canPlay) {
                 this._audio.play();
             }
+            this._songIsOn = true;
 
             this._resetButton.classList.remove("hidden");
             this._startButton.classList.add("hidden");

@@ -47,6 +47,7 @@ class Clock {
         //audio
         this._audio = null;
         this._canPlay = false;
+        this._songIsOn = false;
 
         //youtube
         this._player;
@@ -232,7 +233,16 @@ class Clock {
          * delete button
          */
         this._deleteButton = ElementUtilities.createButtonElement(null, "delete-button", () => {
-            this._clockDiv.parentNode.removeChild(this._clockDiv);
+            if (this._songIsOn) {
+                if (this.config.isYoutubeLink) {
+                    this._player.stopVideo();
+                } else if (this._canPlay) {
+                    this._audio.pause();
+                    this._audio.currentTime = 0;
+                }
+                this._songIsOn = false;
+            }
+            this._clockDiv.parentNode.removeChild(this._clockDiv); 
             this.clockDeleted();
         })
     }

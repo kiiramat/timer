@@ -37,6 +37,7 @@ class Timer extends Clock {
             } else if (this._canPlay) {
                 this._audio.play();
             }
+            this._songIsOn = true;
         }
     }
 
