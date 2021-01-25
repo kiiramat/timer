@@ -396,6 +396,11 @@ input[type='number'] {
     border-width: 0px;
   }
 
+
+  .clocks {
+    margin-left: 0px;
+  }
+
   /* title */
   .title-input {
     width: 80%;
